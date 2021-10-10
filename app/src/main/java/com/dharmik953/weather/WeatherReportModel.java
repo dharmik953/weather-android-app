@@ -168,14 +168,15 @@ public class WeatherReportModel {
     @Override
     public String toString() {
         return
-                " Date: " + applicable_date + '\n'+
-                " "+weather_state_name + '\n'+
-                " lo: " + min_temp +'\n'+
-                " High: " + max_temp +'\n'+
-                " Temp: " + the_temp +'\n'+
-                " Wind speed: " + wind_speed +'\n'+
-                " Air pressure=" + air_pressure +'\n'+
-                " Humidity " + humidity +'\n'+
-                " Visibility: " + visibility+'\n';
+                '\n' +
+                "   ->  Date: " + applicable_date + '\n'+
+                "   ->  "+weather_state_name + '\n'+
+                "   ->  lo: " + min_temp +'\n'+
+                "   ->  High: " + max_temp +'\n'+
+                "   ->  Temp: " + the_temp +'\n'+
+                "   ->  Wind speed: " + wind_speed +'\n'+
+                "   ->  Air pressure=" + air_pressure +'\n'+
+                "   ->  Humidity " + humidity +'\n'+
+                "   ->  Visibility: " + visibility+'\n';
     }
 }

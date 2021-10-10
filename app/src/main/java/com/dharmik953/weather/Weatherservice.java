@@ -34,21 +34,17 @@ public class Weatherservice {
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                //cityId = "";
-
                 try {
                     JSONObject cityInfo = response.getJSONObject(0);
                     cityId = cityInfo.getString("woeid");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                //Toast.makeText(context, "city Id = " + cityId, Toast.LENGTH_SHORT).show();
                 vollyResponseListener.onResponce(cityId);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                      //  Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
                 vollyResponseListener.onError("Something wrong");
             }
         });
@@ -59,7 +55,7 @@ public class Weatherservice {
 
         void onError(String message);
 
-        void onResponce( List<WeatherReportModel> weatherReportModels);
+        void onResponse(List<WeatherReportModel> weatherReportModels);
     }
 
     public void getCityForecastById(String cityId, final ForecastByIdResponse forecastByIdResponse){
@@ -68,8 +64,6 @@ public class Weatherservice {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-               //Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
-
                 try {
                     JSONArray consolidated_weather_list = response.getJSONArray("consolidated_weather");
 
@@ -93,36 +87,34 @@ public class Weatherservice {
                         one_day.setMax_temp(first_day_from_api.getLong("max_temp"));
                         weatherReportModels.add(one_day);
                     }
-                        forecastByIdResponse.onResponce(weatherReportModels);
+                        forecastByIdResponse.onResponse(weatherReportModels);
                 } catch (JSONException e) {
-                    Toast.makeText(context, "error in catch on responce by id", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "error in catch on response by id", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
-                //Toast.makeText(context, weatherReportModels.toString(), Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
                 forecastByIdResponse.onError("Some thing went wrong");
             }
         });
-
 
         MySingleton.getInstance(context).addToRequestQueue(request);
     }
 //*********************************************************************************************************************************************************************************************************************************************************************************************************
 
-    public interface GetcutyFoecastByCallback{
+    public interface GetcityFoecastByCallback{
+
         void onError(String message);
 
         void onRespose(List<WeatherReportModel> weatherReportModels);
     }
-    public void getCityForcatsByName(String ciryName, final GetcutyFoecastByCallback getcutyFoecastByCallback){
+    public void getCityForcatsByName(String ciryName, final GetcityFoecastByCallback getcityFoecastByCallback){
         getCityId(ciryName, new VollyResponseListener() {
             @Override
             public void onError(String message) {
-                getcutyFoecastByCallback.onError("Some thing went wrong");
+                getcityFoecastByCallback.onError("Some thing went wrong");
             }
 
             @Override
@@ -134,8 +126,8 @@ public class Weatherservice {
                     }
 
                     @Override
-                    public void onResponce(List<WeatherReportModel> weatherReportModels) {
-                        getcutyFoecastByCallback.onRespose(weatherReportModels);
+                    public void onResponse(List<WeatherReportModel> weatherReportModels) {
+                        getcityFoecastByCallback.onRespose(weatherReportModels);
                     }
                 });
             }

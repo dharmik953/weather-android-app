@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onResponce(List<WeatherReportModel> weatherReportModels) {
+                    public void onResponse(List<WeatherReportModel> weatherReportModels) {
 
                       ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1,weatherReportModels);
                        listView.setAdapter(arrayAdapter);
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         W_by_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                weatherservice.getCityForcatsByName(textView.getText().toString(), new Weatherservice.GetcutyFoecastByCallback() {
+                weatherservice.getCityForcatsByName(textView.getText().toString(), new Weatherservice.GetcityFoecastByCallback() {
                     @Override
                     public void onError(String message) {
                         Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
